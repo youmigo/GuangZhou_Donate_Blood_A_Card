@@ -37,7 +37,7 @@ leaflet(data = dtsd) |> amap() |>
     lng = ~ lng,
     popup = ~ name,
     color = colorRampPalette(
-      c('#99CCFF', '#996600'))(dtsd$data() |>nrow())
+      c('#99CCFF', '#996600'))(dt |>nrow()) #  按行数生成颜色数
     , clusterOptions = markerClusterOptions() #  放遮盖
   ) |>
   addMarkers(
