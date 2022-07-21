@@ -18,13 +18,13 @@ dt |> View()
 names(dt) <- c('id','name','lng','lat')
 
 #数据读取区bate Thu Apr  7 01:24:32 2022 ------------------------------
-gz.map <-  'https://geo.datav.aliyun.com/areas_v3/bound/geojson?code=440100_full' |> sf::st_read()
+gz.map <-  'https://geo.datav.aliyun.com/areas_v3/bound/geojson?code=440100_full' |> sf::st_read();kittyR::meowR(sound = 4)#猫叫🐱
 
 #出图 Thu Jul 21 17:13:24 2022 ------------------------------
 
-dtfrm <- datatable(dt)
+dtfrm <- datatable(dt[,1:2])
 dtfrm
-dtsd <- SharedData$new(dtfrm);kittyR::meowR(sound = 4)#猫叫🐱
+dtsd <- SharedData$new(dt)
 
 mp <-
 leaflet(data = dtsd) |> amap() |>
