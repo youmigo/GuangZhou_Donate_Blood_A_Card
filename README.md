@@ -1,0 +1,2 @@
+# GuangZhou_Donate_Blood_A_Card
+广州优待证A卡免费旅游景点
