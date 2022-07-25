@@ -25,28 +25,40 @@ gz.map <-  'https://geo.datav.aliyun.com/areas_v3/bound/geojson?code=440100_full
 dtfrm <- datatable(dt[,1:2])
 dtfrm
 dtsd <- SharedData$new(dt)
+#pop标签 Tue Jul 26 01:52:22 2022 ------------------------------
+greenLeafIcon <- makeIcon(
+  iconUrl = "https://s1.ax1x.com/2020/09/23/wvD929.png",
+  iconWidth = 28, iconHeight = 48,
+  iconAnchorX = 15, iconAnchorY = 45,
+  # shadowUrl = "https://s1.ax1x.com/2020/09/23/wvD929.png",
+  # shadowWidth = 50, shadowHeight = 64,
+  # shadowAnchorX = 4, shadowAnchorY = 62
+)
+# Tue Jul 26 01:52:49 2022 ---
 
-mp <-
-leaflet(data = dtsd) |> amap() |>
+# mp <-
+leaflet(data = dtsd) |>
+  amap() |>
   # addTiles() |>
-  addPolylines(data =gz.map,
-               color = '#CC6699'
-  ) |>
+  addPolygons(data = gz.map,
+              fillColor = rainbow(11)
+              ,color = 'green') |>
   addCircleMarkers(
+    # data = dtsd,
     lat = ~ lat,
     lng = ~ lng,
     popup = ~ name,
-    color = colorRampPalette(
-      c('#99CCFF', '#996600'))(dt |>nrow()) #  按行数生成颜色数
-    , clusterOptions = markerClusterOptions() #  放遮盖
+    color = 'green'
+    #   colorRampPalette(
+    #   c('#99CCFF', '#996600'))(dt |>nrow()) #  按行数生成颜色数
+    # , clusterOptions = markerClusterOptions() #  放遮盖
   ) |>
   addMarkers(
+    # data = dtsd,
     lat = ~ lat,
     lng = ~ lng,
     popup = ~ name,
-    # color = colorRampPalette(
-    #   c('#336666', '#996600'))(dtsd$data() |>nrow())
-    # ,clusterOptions = markerClusterOptions() #  放遮盖
+    icon = greenLeafIcon
   )
 mp
 
