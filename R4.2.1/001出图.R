@@ -21,7 +21,7 @@ names(dt) <- c('id','name','lng','lat')
 gz.map <-  'https://geo.datav.aliyun.com/areas_v3/bound/geojson?code=440100_full' |> sf::st_read();kittyR::meowR(sound = 4)#猫叫🐱
 
 #出图 Thu Jul 21 17:13:24 2022 ------------------------------
-
+vignette(dt[,1:2])
 dtfrm <- datatable(dt[,1:2])
 dtfrm
 dtsd <- SharedData$new(dt)
@@ -36,7 +36,7 @@ greenLeafIcon <- makeIcon(
 )
 # Tue Jul 26 01:52:49 2022 ---
 
-# mp <-
+mp <-
 leaflet(data = dtsd) |>
   amap() |>
   # addTiles() |>
@@ -51,14 +51,14 @@ leaflet(data = dtsd) |>
     color = 'green'
     #   colorRampPalette(
     #   c('#99CCFF', '#996600'))(dt |>nrow()) #  按行数生成颜色数
-    # , clusterOptions = markerClusterOptions() #  放遮盖
+    , clusterOptions = markerClusterOptions() #  放遮盖
   ) |>
   addMarkers(
     # data = dtsd,
     lat = ~ lat,
     lng = ~ lng,
-    popup = ~ name,
-    icon = greenLeafIcon
+    popup = ~ name
+    # ,icon = greenLeafIcon
   )
 mp
 
