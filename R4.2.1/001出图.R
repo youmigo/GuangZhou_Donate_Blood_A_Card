@@ -13,8 +13,8 @@ library(DT)
 require(leafem)
 rm(list = ls());gc()
 
-dt <- read.csv("data/广州优待证A卡免费旅游景点.csv",header = TRUE)
-dt |> View()
+dt <- readr::read_csv("data/高德坐标拾取原始数据.csv")#,header = TRUE)
+dt |> head()
 names(dt) <- c('id','name','lng','lat')
 
 #数据读取区bate Thu Apr  7 01:24:32 2022 ------------------------------
@@ -37,7 +37,7 @@ greenLeafIcon <- makeIcon(
 # Tue Jul 26 01:52:49 2022 ---
 
 mp <-
-leaflet(data = dtsd) |>
+  leaflet(data = dtsd) |>
   amap() |>
   # addTiles() |>
   addPolygons(data = gz.map,
@@ -62,7 +62,12 @@ leaflet(data = dtsd) |>
   )
 mp
 
+htmlwidgets::saveWidget(mp, file='web/leafletHTML.html')
 
-bscols(
- mp,dtfrm
-)
+
+bshtml <- bscols(mp,dtfrm)
+bshtml
+htmlwidgets::saveWidget(bshtml, file='web/index.html')
+
+
+saveRDS(dt,'dt.rds')
