@@ -27,16 +27,15 @@ label <- dt[,2]
 amapurl <-
   data.frame( "<a href='",
               "https://uri.amap.com/marker?position=",
-         xy,
-         '&name=',
-         label,
-         '&src=🍐&coordinate=&callnative=1',
-         '[\']target=\"_blank\">',
-         label,
-         "</a>"  )
+              xy,
+              '&name=',
+              label,
+              '&src=🍐&coordinate=&callnative=1',
+              '[\']target=\"_blank\">',
+              label,
+              "</a>"  )
 names(amapurl) <- letters[1:length(amapurl)]
-amapurl |>
-  datatable()
+
 # Wed Jun  7 19:46:23 2023 --
 dt <-  tidyr::unite(amapurl,"laburl",names(amapurl),sep = "",remove = T) |> cbind(dt)
 
@@ -45,7 +44,7 @@ rm(xy,amapurl,label)
 dt <- dt[,-4]
 dt <- dt[,-2]
 #出图 Thu Jul 21 17:13:24 2022 ------------------------------
-
+datatable(dt)
 
 dtsd <- SharedData$new(dt)
 #pop标签 Tue Jul 26 01:52:22 2022 ------------------------------
@@ -59,7 +58,7 @@ greenLeafIcon <- makeIcon(
 )
 # Tue Jul 26 01:52:49 2022 ---
 myicon <- makeIcon(iconUrl = "web/icon.svg",
-                       iconWidth = 50.45, iconHeight = 50.20)
+                   iconWidth = 50.45, iconHeight = 50.20)
 # Wed Jun  7 20:10:34 2023 --
 
 mp <-
@@ -75,8 +74,8 @@ mp <-
     lng = ~ lng,
     popup = ~ name,
     color = 'green'
-# ,      colorRampPalette(
-#       c('#99CCFF', '#996600'))(dt |>nrow()) #  按行数生成颜色数
+    # ,      colorRampPalette(
+    #       c('#99CCFF', '#996600'))(dt |>nrow()) #  按行数生成颜色数
     , clusterOptions = markerClusterOptions() #  放遮盖
   ) |>
   addMarkers( #标注点
@@ -88,17 +87,18 @@ mp <-
   )
 mp
 
-htmlwidgets::saveWidget(mp, file='web/leaflet.html')
+htmlwidgets::saveWidget(mp, file='web/index.html')
 #合并表格和地图 Wed Jun  7 20:19:49 2023 ------------------------------
 dtfrm <- datatable(data.frame(name=dt[,2])) |>
   formatStyle('name',  color = '#663366', backgroundColor = '#F2F2F2', fontWeight = 'bold')
 dtfrm
+htmlwidgets::saveWidget(dtfrm, file='web/gzatable.html')
 
 bshtml <-
-bscols(
-  widths = c(4,8),
-dtfrm,mp
-, device = c( "lg"))#"xs", "sm", "md",
+  bscols(
+    widths = c(4,8),
+    dtfrm,mp
+    , device = c( "lg"))#"xs", "sm", "md",
 
 bshtml
 # htmlwidgets::saveWidget(bshtml, file='web/index.html')
